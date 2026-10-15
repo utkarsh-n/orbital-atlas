@@ -1,0 +1,7 @@
+{
+  "samples": 772,
+  "maxPositionKm": 46.11644137070294,
+  "note": "Observed interpolation residual in independent samples, not a universal error bound or JPL prediction uncertainty.",
+  "moonSamples": 232,
+  "moonMaxPositionKm": 0.9167508059918481
+}

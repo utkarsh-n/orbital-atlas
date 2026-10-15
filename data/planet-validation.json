@@ -1,0 +1,200 @@
+{
+  "mercury": {
+    "target": "199",
+    "stepDays": 1,
+    "all": {
+      "count": 60,
+      "maxPositionKm": 46.11644137070294,
+      "maxPositionJD": 2457204.25,
+      "maxPositionKind": "leap_interval",
+      "maxVelocityMps": 1.1478103788696656,
+      "maxVelocityJD": 2457754.25,
+      "maxVelocityKind": "leap_interval"
+    },
+    "excludingLeapIntervals": {
+      "count": 48,
+      "maxPositionKm": 20.04475621703575,
+      "maxPositionJD": 2415347.0,
+      "maxPositionKind": "near_perihelion",
+      "maxVelocityMps": 0.6959861104342888,
+      "maxVelocityJD": 2415347.25,
+      "maxVelocityKind": "near_perihelion"
+    }
+  },
+  "venus": {
+    "target": "299",
+    "stepDays": 2,
+    "all": {
+      "count": 60,
+      "maxPositionKm": 29.823946757808578,
+      "maxPositionJD": 2453736.0,
+      "maxPositionKind": "leap_interval",
+      "maxVelocityMps": 0.3054345479799832,
+      "maxVelocityJD": 2453735.5,
+      "maxVelocityKind": "leap_interval"
+    },
+    "excludingLeapIntervals": {
+      "count": 48,
+      "maxPositionKm": 2.9125322303346057,
+      "maxPositionJD": 2415337.5,
+      "maxPositionKind": "low_radius",
+      "maxVelocityMps": 0.05056323282578693,
+      "maxVelocityJD": 2415338.0,
+      "maxVelocityKind": "low_radius"
+    }
+  },
+  "earth": {
+    "target": "399",
+    "stepDays": 2,
+    "all": {
+      "count": 60,
+      "maxPositionKm": 25.670222662022677,
+      "maxPositionJD": 2453736.0,
+      "maxPositionKind": "leap_interval",
+      "maxVelocityMps": 0.2627529873248106,
+      "maxVelocityJD": 2457753.5,
+      "maxVelocityKind": "leap_interval"
+    },
+    "excludingLeapIntervals": {
+      "count": 48,
+      "maxPositionKm": 1.4973442458966892,
+      "maxPositionJD": 2472367.5,
+      "maxPositionKind": "spread",
+      "maxVelocityMps": 0.026023113926408964,
+      "maxVelocityJD": 2472368.0,
+      "maxVelocityKind": "spread"
+    }
+  },
+  "mars": {
+    "target": "499",
+    "stepDays": 4,
+    "all": {
+      "count": 60,
+      "maxPositionKm": 19.905147232704444,
+      "maxPositionJD": 2453735.5,
+      "maxPositionKind": "leap_interval",
+      "maxVelocityMps": 0.11295519361707504,
+      "maxVelocityJD": 2457754.5,
+      "maxVelocityKind": "leap_interval"
+    },
+    "excludingLeapIntervals": {
+      "count": 48,
+      "maxPositionKm": 2.227467359154521,
+      "maxPositionJD": 2487922.5,
+      "maxPositionKind": "low_radius",
+      "maxVelocityMps": 0.019310790953928906,
+      "maxVelocityJD": 2415097.5,
+      "maxVelocityKind": "low_radius"
+    }
+  },
+  "jupiter": {
+    "target": "5",
+    "stepDays": 8,
+    "all": {
+      "count": 60,
+      "maxPositionKm": 11.134559301975546,
+      "maxPositionJD": 2447890.5,
+      "maxPositionKind": "spread",
+      "maxVelocityMps": 0.028648214608426432,
+      "maxVelocityJD": 2447888.5,
+      "maxVelocityKind": "spread"
+    },
+    "excludingLeapIntervals": {
+      "count": 45,
+      "maxPositionKm": 0.06377178455268709,
+      "maxPositionJD": 2460120.5,
+      "maxPositionKind": "spread",
+      "maxVelocityMps": 0.0008042548598842344,
+      "maxVelocityJD": 2417288.5,
+      "maxVelocityKind": "spread"
+    }
+  },
+  "saturn": {
+    "target": "6",
+    "stepDays": 16,
+    "all": {
+      "count": 60,
+      "maxPositionKm": 8.564027870536606,
+      "maxPositionJD": 2441496.5,
+      "maxPositionKind": "leap_interval",
+      "maxVelocityMps": 0.011022780771416841,
+      "maxVelocityJD": 2441492.5,
+      "maxVelocityKind": "leap_interval"
+    },
+    "excludingLeapIntervals": {
+      "count": 45,
+      "maxPositionKm": 0.16242048201718745,
+      "maxPositionJD": 2417284.5,
+      "maxPositionKind": "spread",
+      "maxVelocityMps": 0.0007633890121858322,
+      "maxVelocityJD": 2417288.5,
+      "maxVelocityKind": "spread"
+    }
+  },
+  "uranus": {
+    "target": "7",
+    "stepDays": 32,
+    "all": {
+      "count": 60,
+      "maxPositionKm": 5.657488412451575,
+      "maxPositionJD": 2447892.5,
+      "maxPositionKind": "spread",
+      "maxVelocityMps": 0.004419373727809753,
+      "maxVelocityJD": 2457764.5,
+      "maxVelocityKind": "leap_interval"
+    },
+    "excludingLeapIntervals": {
+      "count": 45,
+      "maxPositionKm": 2.2840730934176645,
+      "maxPositionJD": 2472348.5,
+      "maxPositionKind": "spread",
+      "maxVelocityMps": 0.002565420875905165,
+      "maxVelocityJD": 2472356.5,
+      "maxVelocityKind": "spread"
+    }
+  },
+  "neptune": {
+    "target": "8",
+    "stepDays": 32,
+    "all": {
+      "count": 60,
+      "maxPositionKm": 4.790374295831837,
+      "maxPositionJD": 2447892.5,
+      "maxPositionKind": "spread",
+      "maxVelocityMps": 0.0036530832609051778,
+      "maxVelocityJD": 2447892.5,
+      "maxVelocityKind": "spread"
+    },
+    "excludingLeapIntervals": {
+      "count": 45,
+      "maxPositionKm": 2.302801583436574,
+      "maxPositionJD": 2472348.5,
+      "maxPositionKind": "spread",
+      "maxVelocityMps": 0.0025862443380204408,
+      "maxVelocityJD": 2472356.5,
+      "maxVelocityKind": "spread"
+    }
+  },
+  "pluto": {
+    "target": "9",
+    "stepDays": 32,
+    "all": {
+      "count": 60,
+      "maxPositionKm": 5.500776966935707,
+      "maxPositionJD": 2457204.5,
+      "maxPositionKind": "leap_interval",
+      "maxVelocityMps": 0.005025201416685996,
+      "maxVelocityJD": 2447892.5,
+      "maxVelocityKind": "spread"
+    },
+    "excludingLeapIntervals": {
+      "count": 45,
+      "maxPositionKm": 2.3015490091785984,
+      "maxPositionJD": 2472348.5,
+      "maxPositionKind": "spread",
+      "maxVelocityMps": 0.00258685343738582,
+      "maxVelocityJD": 2472356.5,
+      "maxVelocityKind": "spread"
+    }
+  }
+}

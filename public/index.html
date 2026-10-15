@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#090d19" />
+    <meta
+      name="description"
+      content="An interactive solar-system instrument with JPL orbital ephemerides, nine planetary tracks, the Earth–Moon system, projected time, zodiac directions and Hindu calendar cycles."
+    />
+    <title>Space Age · Orbital Atlas</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/atlas.css" />
+    <script defer src="/vendor/p5.min.js"></script>
+    <script type="module" src="/src/app.js"></script>
+  </head>
+  <body>
+    <main class="console">
+      <header class="masthead">
+        <div class="brand-mark" aria-hidden="true">✦</div>
+        <div>
+          <p class="eyebrow">SOLAR SYSTEM / MISSION CONTROL</p>
+          <h1>Orbital Atlas<span>Space. Time. Perspective.</span></h1>
+        </div>
+        <div class="system-status">
+          <span class="lamp"></span><span id="data-status" role="status">ACQUIRING EPHEMERIS</span
+          ><small>JPL HORIZONS / 1900—2100</small>
+        </div>
+      </header>
+      <nav class="mode-bar" aria-label="Projection modes">
+        <div class="mode-switch" role="group" aria-label="Dimensions">
+          <button data-mode="2d"><b>2D</b><span>Ecliptic</span></button
+          ><button data-mode="3d" aria-pressed="true" class="active">
+            <b>3D</b><span>Orbits</span></button
+          ><button data-mode="4d"><b>4D</b><span>Worldlines</span></button
+          ><button data-mode="5d"><b>5D</b><span>Time lenses</span></button>
+        </div>
+        <div class="frame-label"><span>SUN-CENTERED</span><strong>J2000 / ECLIPTIC</strong></div>
+      </nav>
+      <div class="workbench">
+        <section class="time-module" aria-label="Simulation time">
+          <div class="module-heading">
+            <span><i>03</i> Timeline</span><span id="time-state">HOLD</span>
+          </div>
+          <div class="chronograph-main">
+            <div class="transport">
+              <button id="play" class="primary-button" aria-label="Play simulation">
+                <span id="play-icon">▶</span><span id="play-text">PLAY</span></button
+              ><button id="step-back" aria-label="Step back one day">−1d</button
+              ><button id="step-next" aria-label="Step forward one day">+1d</button>
+            </div>
+            <div class="date-control">
+              <label for="date-input">Date · Universal Time</label
+              ><input
+                id="date-input"
+                type="datetime-local"
+                min="1900-01-01T00:00"
+                max="2100-12-31T00:00"
+                step="60"
+              /><span id="date-error" role="status"></span>
+            </div>
+            <div class="rate-control">
+              <button id="direction" aria-label="Reverse time direction" aria-pressed="false">
+                →</button
+              ><label
+                ><span>Playback speed</span
+                ><select id="speed">
+                  <option value="1">1 day / second</option>
+                  <option value="10">10 days / second</option>
+                  <option value="60" selected>60 days / second</option>
+                  <option value="365.25">1 year / second</option>
+                  <option value="3652.5">10 years / second</option>
+                </select></label
+              ><button id="today">Today</button>
+            </div>
+          </div>
+          <div class="timeline">
+            <input
+              id="epoch-slider"
+              type="range"
+              min="0"
+              max="73413"
+              step="0.01"
+              value="0"
+              aria-label="Simulation epoch"
+            />
+            <div class="timeline-ticks">
+              <span>1900</span><span>1950</span><span>2000</span><span>2050</span><span>2100</span>
+            </div>
+          </div>
+          <div class="calendar-overlay" aria-label="Hindu calendar at the selected instant">
+            <span class="calendar-overlay-label">Hindu calendar</span
+            ><output id="timeline-tithi">Calculating tithi</output
+            ><output id="timeline-nakshatra">Calculating nakshatra</output
+            ><output id="timeline-solar">Calculating solar rashi</output>
+          </div>
+        </section>
+        <section class="display-module" aria-label="Orbital visualization">
+          <div class="module-heading">
+            <span><i>01</i> Orbital view</span
+            ><span class="live-label" id="view-label">THREE-DIMENSIONAL ORBITS</span>
+          </div>
+          <div class="display-toolbar">
+            <div class="segments" role="group" aria-label="Orbit spacing">
+              <button data-spacing="atlas" class="active" aria-pressed="true">Atlas spacing</button
+              ><button data-spacing="true" aria-pressed="false">True AU</button>
+            </div>
+            <div class="view-actions">
+              <button id="zoom-out" aria-label="Zoom out">−</button
+              ><output id="zoom-value" aria-label="Zoom">100%</output
+              ><button id="zoom-in" aria-label="Zoom in">+</button
+              ><button id="home-view" class="text-button">Reset view</button>
+            </div>
+          </div>
+          <div class="celestial-toolbar">
+            <label class="toggle"
+              ><input id="show-zodiac" type="checkbox" checked /><span></span>Zodiac</label
+            >
+            <label class="zodiac-select"
+              ><span>Reference</span
+              ><select id="zodiac-system" aria-label="Zodiac reference">
+                <option value="tropical">Tropical · seasons</option>
+                <option value="sidereal">Sidereal · Lahiri mean</option>
+              </select></label
+            >
+            <label class="geometry-select"
+              ><span>Geometry</span
+              ><select id="sacred-geometry" aria-label="Sacred geometry">
+                <option value="mandala">12-fold mandala</option>
+                <option value="seed">Seed of life</option>
+                <option value="off">Off</option>
+              </select></label
+            >
+          </div>
+          <div class="lens-toolbar" id="lens-toolbar" hidden>
+            <span>Time lens</span>
+            <div class="segments" role="group" aria-label="Time lens">
+              <button data-lens="cylinder">Cylinder</button
+              ><button data-lens="torus" class="active" aria-pressed="true">Torus</button
+              ><button data-lens="tracks">Phase tracks</button>
+            </div>
+          </div>
+          <div class="scope-bezel">
+            <div
+              id="scope"
+              tabindex="0"
+              role="application"
+              aria-roledescription="interactive orbital visualization"
+              aria-label="Solar system. Drag to rotate, arrow keys to turn, plus and minus to zoom, Home to reset."
+            ></div>
+            <div class="scanlines"></div>
+            <div id="load-state" class="loading-state">
+              <div class="loading-orbit"></div>
+              <p>Loading the solar system</p>
+              <progress
+                id="load-progress"
+                max="1"
+                value="0"
+                aria-label="Ephemeris loading progress"
+              ></progress
+              ><small>Bundled JPL positions & velocities</small>
+            </div>
+            <div class="scope-top">
+              <span id="plot-title">HELIOCENTRIC ORBITAL MAP</span><span id="frame-date">—</span>
+            </div>
+            <div class="scope-bottom">
+              <span id="plot-scale">ELLIPSE SHAPES & PHASES PRESERVED</span
+              ><span id="camera-output">AZ 0° / EL 48°</span>
+            </div>
+          </div>
+          <div class="bond-legend">
+            <span class="sample-a-key">Sample A</span
+            ><span class="tether-key">Quantum tether <small>· symbolic birth-sky link</small></span
+            ><span class="sample-b-key">Sample B</span>
+          </div>
+          <div class="display-caption">
+            <span id="view-explanation"
+              >Orbital distances are individually scaled for legibility. Switch to True AU for a
+              common distance scale.</span
+            ><span class="gesture-hint">↔ DRAG TO ROTATE</span>
+          </div>
+          <div class="display-options">
+            <label class="toggle"
+              ><input id="show-labels" type="checkbox" checked /><span></span>Names</label
+            ><label class="toggle"
+              ><input id="show-grid" type="checkbox" checked /><span></span>Ecliptic grid</label
+            ><span class="size-note"
+              >Zodiac = sky directions · body sizes & marker distances artistic</span
+            >
+          </div>
+          <div class="time-projection-controls" id="time-projection-controls" hidden>
+            <label for="time-window">Time window</label
+            ><select id="time-window">
+              <option value="90">±90 days</option>
+              <option value="365">±1 year</option>
+              <option value="1826.25" selected>±5 years</option>
+              <option value="14610">±40 years</option></select
+            ><label class="toggle"
+              ><input id="all-worldlines" type="checkbox" /><span></span>All bodies</label
+            ><span id="time-range-note">Focused on Earth · past solid / future dashed</span>
+          </div>
+
+          <section class="lunar-module" aria-label="Earth and Moon at the selected time">
+            <div class="lunar-heading">
+              <h2>Earth &amp; Moon</h2>
+              <span>Linked to timeline</span>
+            </div>
+            <div class="lunar-content">
+              <div class="phase-readout">
+                <svg
+                  id="moon-disc"
+                  class="moon-disc"
+                  viewBox="-1.05 -1.05 2.1 2.1"
+                  role="img"
+                  aria-label="Moon phase loading"
+                >
+                  <defs>
+                    <radialGradient id="moon-light" cx="35%" cy="30%">
+                      <stop offset="0" stop-color="#f0f3ff" />
+                      <stop offset="1" stop-color="#bbc8eb" />
+                    </radialGradient>
+                  </defs>
+                  <circle r="1" fill="#252f4b" stroke="#526181" stroke-width=".018" />
+                  <path id="moon-lit" fill="url(#moon-light)" d="" />
+                </svg>
+                <div class="phase-copy">
+                  <h3 id="moon-phase">Calculating phase</h3>
+                  <p><output id="moon-illumination">—</output> illuminated</p>
+                  <p id="moon-trend">Geocentric phase</p>
+                </div>
+                <div class="lunar-metrics">
+                  <div><span>Earth distance</span><output id="moon-distance">— km</output></div>
+                  <div><span>Sun elongation</span><output id="moon-elongation">—°</output></div>
+                </div>
+              </div>
+              <div class="lunar-orbit-wrap">
+                <div
+                  id="lunar-orbit"
+                  role="img"
+                  aria-label="Moon orbit around Earth, viewed from ecliptic north. Live ephemeris position and instantaneous ellipse guide."
+                ></div>
+              </div>
+            </div>
+            <p class="lunar-caption" id="moon-caption">
+              Earth-centered orbit · geometric phase schematic · same time as the planetary map.
+            </p>
+          </section>
+        </section>
+        <aside class="telemetry-module">
+          <div class="module-heading">
+            <span><i>02</i> Planet telemetry</span><span>09 TRACKS</span>
+          </div>
+          <div class="body-list" id="body-list"></div>
+          <div class="body-readout" id="body-readout">
+            <div class="readout-heading">
+              <span id="selected-symbol">⊕</span>
+              <div>
+                <h2 id="selected-name">Earth</h2>
+                <p id="selected-type">Terrestrial planet</p>
+              </div>
+              <span class="tiny-lamp"></span>
+            </div>
+            <dl>
+              <div>
+                <dt>Sun distance</dt>
+                <dd><output id="body-distance">—</output><small>AU</small></dd>
+              </div>
+              <div>
+                <dt>Orbital speed</dt>
+                <dd><output id="body-speed">—</output><small>km/s</small></dd>
+              </div>
+              <div>
+                <dt>Eccentricity</dt>
+                <dd><output id="body-ecc">—</output></dd>
+              </div>
+              <div>
+                <dt>Inclination</dt>
+                <dd><output id="body-inc">—</output><small>deg</small></dd>
+              </div>
+              <div>
+                <dt>Osculating period</dt>
+                <dd><output id="body-period">—</output><small id="period-unit">yr</small></dd>
+              </div>
+              <div>
+                <dt>True anomaly</dt>
+                <dd><output id="body-phase">—</output><small>deg</small></dd>
+              </div>
+            </dl>
+            <div class="coordinates">
+              <span>X / Y / Z · AU</span><output id="body-coordinates">— / — / —</output>
+            </div>
+            <p id="body-note">
+              Position is date-locked to the ephemeris. The faint ellipse is an instantaneous
+              orbital guide.
+            </p>
+          </div>
+        </aside>
+      </div>
+      <section class="cosmic-module" aria-label="Celestial cycles and birth connection">
+        <div class="cosmic-header">
+          <div>
+            <p class="eyebrow">PATTERNS ACROSS TIME</p>
+            <h2>Celestial atlas</h2>
+          </div>
+          <span class="cosmic-epoch" id="cosmic-epoch">Linked to timeline</span>
+        </div>
+        <div class="cosmic-tabs" role="tablist" aria-label="Celestial atlas panels">
+          <button
+            id="tab-bond"
+            role="tab"
+            data-cosmic-tab="bond"
+            aria-controls="panel-bond"
+            aria-selected="true"
+            class="active"
+          >
+            Birth connection
+          </button>
+          <button
+            id="tab-calendar"
+            role="tab"
+            data-cosmic-tab="calendar"
+            aria-controls="panel-calendar"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            Lunar &amp; solar cycles
+          </button>
+          <button
+            id="tab-cosmology"
+            role="tab"
+            data-cosmic-tab="cosmology"
+            aria-controls="panel-cosmology"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            Hindu cosmic time
+          </button>
+        </div>
+        <div id="panel-bond" class="cosmic-panel" role="tabpanel" aria-labelledby="tab-bond">
+          <div class="birth-grid">
+            <article class="birth-card" style="--person: #7fffd4">
+              <div class="birth-heading">
+                <span class="birth-glyph">✦</span>
+                <div>
+                  <h3>Sample A</h3>
+                  <p>1 January 2000 · synthetic example</p>
+                </div>
+                <button id="birth-sample-a" class="birth-jump">View birth sky</button>
+              </div>
+              <div class="birth-signs">
+                <div><span>Sun · tropical</span><output id="sample-a-sun">—</output></div>
+                <div><span>Moon · Lahiri mean</span><output id="sample-a-moon">—</output></div>
+                <div><span>Birth nakshatra</span><output id="sample-a-nakshatra">—</output></div>
+              </div>
+              <label class="birth-time-label"
+                >Local birth time <input id="time-sample-a" type="time" value="12:00" /><span
+                  >Example offset · UTC+05:30</span
+                ></label
+              >
+              <p class="birth-precision" id="precision-sample-a">
+                Noon estimate. Edit the time to refine the birth sky.
+              </p>
+            </article>
+            <article class="birth-card" style="--person: #ff9fc6">
+              <div class="birth-heading">
+                <span class="birth-glyph">✦</span>
+                <div>
+                  <h3>Sample B</h3>
+                  <p>1 July 2001 · synthetic example</p>
+                </div>
+                <button id="birth-sample-b" class="birth-jump">View birth sky</button>
+              </div>
+              <div class="birth-signs">
+                <div><span>Sun · tropical</span><output id="sample-b-sun">—</output></div>
+                <div><span>Moon · Lahiri mean</span><output id="sample-b-moon">—</output></div>
+                <div><span>Birth nakshatra</span><output id="sample-b-nakshatra">—</output></div>
+              </div>
+              <label class="birth-time-label"
+                >Local birth time <input id="time-sample-b" type="time" value="12:00" /><span
+                  >Example offset · UTC−06:00</span
+                ></label
+              >
+              <p class="birth-precision" id="precision-sample-b">
+                Noon estimate. Edit the time to refine the birth sky.
+              </p>
+            </article>
+          </div>
+          <div class="connection-note">
+            <strong>Two birth skies. One continuous connection.</strong>
+            <p>
+              The nodes remain present before and after both birth dates. Their anchors follow the
+              Sun’s birth-sky direction, with artistic distances. The quantum tether and sacred
+              geometry are symbolic; they do not change the orbital physics.
+            </p>
+            <p id="birth-uncertainty">
+              Birth times affect lunar positions. Ascendants are not inferred without confirmed
+              times.
+            </p>
+          </div>
+        </div>
+        <div
+          id="panel-calendar"
+          class="cosmic-panel"
+          role="tabpanel"
+          aria-labelledby="tab-calendar"
+          hidden
+        >
+          <div class="calendar-grid">
+            <div class="cycle-wheel-wrap">
+              <svg
+                id="cycle-wheel"
+                viewBox="0 0 320 320"
+                role="img"
+                aria-label="Synchronized solar and lunar cycles"
+              >
+                <circle cx="160" cy="160" r="133" fill="none" stroke="#29385b" stroke-width="1" />
+                <circle cx="160" cy="160" r="112" fill="none" stroke="#6550a9" stroke-width="3" />
+                <circle cx="160" cy="160" r="78" fill="none" stroke="#3b6484" stroke-width="3" />
+                <g id="cycle-ticks"></g>
+                <path
+                  id="solar-arc"
+                  fill="none"
+                  stroke="#bc9dff"
+                  stroke-width="5"
+                  stroke-linecap="round"
+                />
+                <path
+                  id="lunar-arc"
+                  fill="none"
+                  stroke="#7fffd4"
+                  stroke-width="5"
+                  stroke-linecap="round"
+                />
+                <circle id="solar-cycle-dot" r="7" fill="#cfb7ff" />
+                <circle id="lunar-cycle-dot" r="6" fill="#7fffd4" />
+                <text
+                  x="160"
+                  y="150"
+                  text-anchor="middle"
+                  fill="#e4e9ff"
+                  font-size="18"
+                  id="cycle-center"
+                >
+                  Lunar phase
+                </text>
+                <text
+                  x="160"
+                  y="175"
+                  text-anchor="middle"
+                  fill="#a6b7d8"
+                  font-size="13"
+                  id="cycle-center-sub"
+                >
+                  Tithi
+                </text>
+                <text x="160" y="310" text-anchor="middle" fill="#a7b7d4" font-size="12">
+                  Solar longitude / lunar elongation
+                </text>
+              </svg>
+            </div>
+            <div class="calendar-readouts">
+              <div class="calendar-metrics">
+                <div><span>Tithi at this instant</span><output id="calendar-tithi">—</output></div>
+                <div>
+                  <span>Nakshatra · Lahiri mean</span><output id="calendar-nakshatra">—</output>
+                </div>
+                <div><span>Sun · selected zodiac</span><output id="calendar-sun">—</output></div>
+                <div><span>Moon · selected zodiac</span><output id="calendar-moon">—</output></div>
+                <div><span>Solar rashi · Lahiri</span><output id="calendar-rashi">—</output></div>
+                <div><span>Lahiri ayanamsa</span><output id="calendar-ayanamsa">—</output></div>
+              </div>
+              <div class="calendar-events">
+                <button id="previous-new">Previous new Moon</button
+                ><button id="next-full">Next full Moon</button
+                ><button id="next-new">Next new Moon</button
+                ><button id="next-ingress">Next solar ingress</button>
+              </div>
+              <p id="calendar-event-note" role="status">
+                Events use the same dated ephemeris as the planetary map.
+              </p>
+              <p class="method-note">
+                Tithis divide Moon–Sun longitude into 30 parts. Nakshatras use 27 equal sidereal
+                sectors. Instantaneous readings are not a location-specific sunrise panchang;
+                regional month and festival conventions differ.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          id="panel-cosmology"
+          class="cosmic-panel"
+          role="tabpanel"
+          aria-labelledby="tab-cosmology"
+          hidden
+        >
+          <div class="cosmology-intro">
+            <div>
+              <h3>Time within time</h3>
+              <p>A traditional Hindu chronology, explored as nested cycles.</p>
+            </div>
+            <span class="tradition-badge">Traditional timescale</span>
+          </div>
+          <div class="cosmic-cycle-buttons" role="group" aria-label="Hindu cosmic cycle">
+            <button data-cycle="kali" class="active" aria-pressed="true">Kali Yuga</button
+            ><button data-cycle="dvapara" aria-pressed="false">Dvapara</button
+            ><button data-cycle="treta" aria-pressed="false">Treta</button
+            ><button data-cycle="satya" aria-pressed="false">Satya</button
+            ><button data-cycle="mahayuga" aria-pressed="false">Mahayuga</button
+            ><button data-cycle="manvantara" aria-pressed="false">Manvantara</button
+            ><button data-cycle="kalpa" aria-pressed="false">Kalpa</button>
+          </div>
+          <div class="cosmic-scale">
+            <div class="cosmic-scale-head">
+              <div>
+                <span id="cosmic-cycle-name">Kali Yuga</span
+                ><strong id="cosmic-duration">432,000 traditional years</strong>
+              </div>
+              <button id="cosmic-now">Align with timeline</button>
+            </div>
+            <div id="yuga-bands" class="yuga-bands"></div>
+            <label for="cosmic-slider" class="sr-only"
+              >Explore selected traditional cosmic cycle</label
+            ><input id="cosmic-slider" type="range" min="0" max="100000" step="1" value="0" />
+            <div class="cosmic-scale-dates">
+              <span id="cosmic-start">—</span><output id="cosmic-date">—</output
+              ><span id="cosmic-end">—</span>
+            </div>
+            <div class="cosmic-status">
+              <span id="cosmic-progress">—</span><span id="cosmic-era">—</span>
+            </div>
+          </div>
+          <p class="method-note" id="cosmic-method">
+            Traditional dates use a declared Kali epoch. The planetary map remains within its
+            1900–2100 ephemeris; this separate scale explores cosmological time symbolically.
+          </p>
+        </div>
+      </section>
+      <section class="notes-panel">
+        <details>
+          <summary>
+            <span>About this model</span><span>Model, dimensions & sources <b>+</b></span>
+          </summary>
+          <div class="notes-grid">
+            <div>
+              <h3>A dated solar system</h3>
+              <p>
+                Eight planets, Pluto and Earth’s Moon follow cached JPL Horizons positions and
+                velocities. Cubic Hermite interpolation supplies intermediate instants. This is a
+                numerical ephemeris, not an exact formula for all spacetime. The supported interval
+                is 1900–2100.
+              </p>
+              <p>
+                Coordinates are geometric, Sun-centered, J2000 ecliptic, without light-time or
+                aberration. Jupiter through Pluto use system barycenters. UT is UT1 before 1962 and
+                UTC thereafter; future leap seconds are unknown.
+              </p>
+            </div>
+            <div>
+              <h3>Space, time & projection</h3>
+              <p>
+                2D looks down on the ecliptic. 3D retains real inclinations. 4D projects x, y, z and
+                time into a worldline view. “5D” names the visual time lenses, not a fifth measured
+                physical coordinate.
+              </p>
+              <p>
+                The cylinder unrolls time; the torus wraps it with a marked display-only join. The
+                solar system does not repeat exactly. Phase tracks show actual orbital anomaly on
+                fixed circular lanes. Nothing rewrites the ephemeris.
+              </p>
+            </div>
+            <div>
+              <h3>Scale & confidence</h3>
+              <p>
+                The lunar phase is geometric, viewed from Earth’s center; eclipses and local sky
+                orientation are not shown. Its disk is a phase schematic. The small Earth-centered
+                view uses one scale for the orbit, with exaggerated body sizes.
+              </p>
+              <p>
+                Body markers use artistic sizes. Atlas spacing scales each orbit uniformly,
+                preserving its ellipse and phase but changing distances between bodies. True AU uses
+                one distance scale. Numeric readouts always use physical units.
+              </p>
+              <p>
+                Faint ellipses are osculating guides; moving bodies follow the perturbed ephemeris.
+                The Moon follows Earth-centered JPL states, added to Earth’s position in the
+                solar-system view.
+              </p>
+              <p id="validation-note">
+                Independent interpolation checks are included with the source.
+              </p>
+            </div>
+            <div>
+              <h3>Zodiac, calendar &amp; birth anchors</h3>
+              <p>
+                Tropical signs are twelve equal 30° sectors from the mean equinox of date. Lahiri
+                mean sidereal signs subtract the declared ayanamsa. These are angular reference
+                sectors, not the unequal astronomical constellation boundaries. The ring is a
+                directional reference: heliocentric planet dots do not directly show Earth-observer
+                zodiac signs.
+              </p>
+              <p>
+                IAU 2006 precession transforms the JPL J2000 coordinates. Mean Lahiri is anchored to
+                the IMD J2000 value 23°51′25.53″. The model uses geometric mean positions, without
+                apparent-position corrections; event times are estimates and may differ from
+                almanacs by minutes.
+              </p>
+              <p>
+                Birth markers use geocentric Sun directions at the supplied birth instants. With no
+                birth times, local noon is assumed and Moon/nakshatra uncertainty is shown.
+                Locations establish the local civil time convention; no ascendant, houses or
+                local-horizon chart is inferred.
+              </p>
+            </div>
+            <div>
+              <h3>Traditional cosmic time &amp; sacred geometry</h3>
+              <p>
+                The yuga durations and nesting follow a traditional Hindu cosmological model: Satya,
+                Treta, Dvapara and Kali in a 4:3:2:1 ratio; 71 Mahayugas per Manvantara; 14
+                Manvantaras with 15 sandhyas per Kalpa. This is a cultural chronology, not an
+                astronomical age measurement.
+              </p>
+              <p>
+                The mandala and Seed of Life are selectable geometric interpretations. The birth
+                tether is symbolic, not a claim of physical quantum entanglement or measured
+                galactic locations. Both nodes are always present in every projection.
+              </p>
+            </div>
+            <div>
+              <h3>Primary sources</h3>
+              <a href="https://ssd.jpl.nasa.gov/horizons/" target="_blank" rel="noreferrer"
+                >JPL Horizons ephemerides ↗</a
+              ><a
+                href="https://ssd.jpl.nasa.gov/horizons/manual.html"
+                target="_blank"
+                rel="noreferrer"
+                >Frames, timescales & numerical model ↗</a
+              ><a href="https://ssd.jpl.nasa.gov/astro_par.html" target="_blank" rel="noreferrer"
+                >JPL astrodynamic constants ↗</a
+              ><a href="https://science.nasa.gov/moon/moon-phases/" target="_blank" rel="noreferrer"
+                >NASA · Moon phases ↗</a
+              ><a href="https://aa.usno.navy.mil/faq/moon_phases" target="_blank" rel="noreferrer"
+                >USNO · Lunar phase definitions ↗</a
+              ><a
+                href="https://packolkata.imd.gov.in/panchang/en/explanation"
+                target="_blank"
+                rel="noreferrer"
+                >IMD · Hindu calendar definitions &amp; Kali epoch</a
+              ><a
+                href="https://packolkata.imd.gov.in/download/IAE2026.zip"
+                target="_blank"
+                rel="noreferrer"
+                >Indian Astronomical Ephemeris 2026</a
+              ><a href="https://www.iausofa.org/2023-10-11c" target="_blank" rel="noreferrer"
+                >IAU SOFA · Reference-frame algorithms</a
+              ><a href="https://vedabase.io/en/library/sb/3/11/19/" target="_blank" rel="noreferrer"
+                >Bhāgavata · Traditional cycle lengths</a
+              ><a href="https://vedabase.io/en/library/cc/adi/3/9/" target="_blank" rel="noreferrer"
+                >Traditional current cycle nesting</a
+              ><small>Data retrieved 02 Oct 2026.<br />Local instrument · p5.js 1.11.11</small>
+            </div>
+          </div>
+        </details>
+      </section>
+      <footer>
+        <span><i class="lamp"></i> EPHEMERIS-DRIVEN / NO FREE PHASE CONTROLS</span
+        ><span>ORBITAL ATLAS / SOLAR SYSTEM</span>
+      </footer>
+    </main>
+  </body>
+</html>

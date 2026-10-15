@@ -1,0 +1,22 @@
+{
+  "samples": 232,
+  "maxPositionKm": 0.9167508059918481,
+  "maxVelocityMS": 0.07549049071838541,
+  "rmsPositionKm": 0.18766508453489217,
+  "worstPosition": {
+    "jd": 2453736.5625,
+    "positionKm": 0.9167508059918481,
+    "velocityMS": 0.05677768071139383
+  },
+  "worstVelocity": {
+    "jd": 2453736.625,
+    "positionKm": 0.5427657826693719,
+    "velocityMS": 0.07549049071838541
+  },
+  "note": "Independent JPL Horizons off-grid requests; samples include leap-second intervals. Measured interpolation residuals, not global accuracy or ephemeris uncertainties.",
+  "excludingLeapIntervals": {
+    "count": 192,
+    "maxPositionKm": 0.019508820049703817,
+    "maxVelocityMS": 0.002030700099378455
+  }
+}

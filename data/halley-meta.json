@@ -1,0 +1,48 @@
+{
+  "name": "1P/Halley",
+  "target": "90000030",
+  "solution": "JPL#75",
+  "solutionDate": "2025-11-21",
+  "retrieved": "2026-10-02",
+  "source": "https://ssd.jpl.nasa.gov/horizons/",
+  "center": "Sun (10)",
+  "centerSource": "DE441",
+  "frame": "J2000 ecliptic",
+  "timeScale": "UT",
+  "timeScaleNote": "UT1 before1962; UTC from1962; future UTC uses latest known leap-second offset.",
+  "units": "AU and AU/day",
+  "layout": [
+    "x",
+    "y",
+    "z",
+    "vx",
+    "vy",
+    "vz"
+  ],
+  "encoding": "Float64 little-endian",
+  "startJD": 2415020.5,
+  "stepDays": 1,
+  "count": 73415,
+  "stopJD": 2488434.5,
+  "method": "Piecewise cubic Hermite interpolation of JPL Horizons geometric state vectors, daily cadence. No light time or aberration correction.",
+  "perihelia": [
+    {
+      "jd": 2418781.6783297854,
+      "dateUT": "1910-04-20T04:16:47.693455",
+      "distanceAU": 0.587210043364775,
+      "dailyBracket": 2418781.5
+    },
+    {
+      "jd": 2446470.9583306033,
+      "dateUT": "1986-02-09T10:59:59.764127",
+      "distanceAU": 0.5871034367755938,
+      "dailyBracket": 2446470.5
+    },
+    {
+      "jd": 2474034.21927726,
+      "dateUT": "2061-07-28T17:15:45.555255",
+      "distanceAU": 0.5927819392894627,
+      "dailyBracket": 2474034.5
+    }
+  ]
+}

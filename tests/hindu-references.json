@@ -1,0 +1,38 @@
+{
+  "source": "https://packolkata.imd.gov.in/panchang/en/explanation",
+  "kaliEpoch": {
+    "convention": "PAC adopted epoch, midnight IST at start of 18 February 3102 BCE, proleptic Julian; astronomical year -3101",
+    "julianDayUT": 588465.2708333334,
+    "gregorianUT": "-003101-01-22T18:30:00Z",
+    "note": "Calendar convention, not an observed creation event. Dates beyond ephemeris coverage must not advance the NASA model."
+  },
+  "events": [
+    {"kind": "fullMoon", "dateUT": "2026-06-29T23:57:00Z", "expectedElongationDeg": 180, "source": "https://packolkata.imd.gov.in/panchang/bn/ashadha", "publishedIST": "30 June 2026 05:27"},
+    {"kind": "newMoon", "dateUT": "2026-07-14T09:44:00Z", "expectedElongationDeg": 0, "source": "https://packolkata.imd.gov.in/panchang/bn/ashadha", "publishedIST": "14 July 2026 15:14"},
+    {"kind": "newMoon", "dateUT": "2026-11-09T07:02:00Z", "expectedElongationDeg": 0, "source": "https://packolkata.imd.gov.in/panchang/bn/kartika", "publishedIST": "9 November 2026 12:32"},
+    {"kind": "sunSiderealIngress", "dateUT": "2026-04-14T04:03:00Z", "sign": "Mesha", "longitudeDeg": 0, "source": "https://packolkata.imd.gov.in/panchang/en/transist_rasis", "publishedIST": "14 April 2026 09:33"},
+    {"kind": "sunSiderealIngress", "dateUT": "2026-07-16T18:09:00Z", "sign": "Karkata", "longitudeDeg": 90, "source": "https://packolkata.imd.gov.in/panchang/en/transist_rasis", "publishedIST": "16 July 2026 23:39"}
+  ],
+  "traditionalYears": {
+    "satya": 1728000,
+    "treta": 1296000,
+    "dvapara": 864000,
+    "kali": 432000,
+    "mahayuga": 4320000,
+    "manvantara": 306720000,
+    "manvantaraSandhya": 1728000,
+    "kalpa": 4320000000
+  },
+  "derivedOffsetsAtKaliEpoch": {
+    "yearsIntoCurrentMahayuga": 3888000,
+    "yearsIntoCurrentManvantara": 120528000,
+    "yearsIntoCurrentKalpa": 1972944000,
+    "note": "Under conventional seventh Manu, 28th mahayuga, with seven prior manvantara sandhyas; derived arithmetic, not astronomical dating."
+  },
+  "durationSources": [
+    "https://vedabase.io/en/library/sb/3/11/18/",
+    "https://vedabase.io/en/library/sb/3/11/19/",
+    "https://vedabase.io/en/library/sb/3/11/22/",
+    "https://vedabase.io/en/library/sb/3/11/24/"
+  ]
+}

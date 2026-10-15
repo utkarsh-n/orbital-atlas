@@ -1,0 +1,102 @@
+{
+  "source": "https://aa.usno.navy.mil/calculated/moon/phases?year=2026",
+  "note": "USNO phase event times are apparent longitude-of-date events; vector geometry uses simultaneous geometric J2000 positions, so small timing/angle differences are expected.",
+  "examples": [
+    {
+      "dateUT": "2026-01-03T10:03:00Z",
+      "phase": "Full Moon",
+      "jd": 2461043.91875,
+      "illumination": 0.9986105509914713,
+      "longitudeDifferenceDeg": 179.99522417335956,
+      "distanceKm": 362312.3794734021
+    },
+    {
+      "dateUT": "2026-01-10T15:48:00Z",
+      "phase": "Last Quarter",
+      "jd": 2461051.158333333,
+      "illumination": 0.5014319418982963,
+      "longitudeDifferenceDeg": 269.9915509988028,
+      "distanceKm": 399239.57642775687
+    },
+    {
+      "dateUT": "2026-01-18T19:52:00Z",
+      "phase": "New Moon",
+      "jd": 2461059.327777778,
+      "illumination": 0.0008678000227232419,
+      "longitudeDifferenceDeg": 359.9944372818561,
+      "distanceKm": 395416.91826915316
+    },
+    {
+      "dateUT": "2026-01-26T04:47:00Z",
+      "phase": "First Quarter",
+      "jd": 2461066.699305556,
+      "illumination": 0.5011829154906496,
+      "longitudeDifferenceDeg": 89.99107925217587,
+      "distanceKm": 371873.1310066473
+    },
+    {
+      "dateUT": "2026-03-03T11:38:00Z",
+      "phase": "Full Moon",
+      "jd": 2461102.984722222,
+      "illumination": 0.9999900977516663,
+      "longitudeDifferenceDeg": 179.99537078007668,
+      "distanceKm": 382612.92101471697
+    },
+    {
+      "dateUT": "2026-08-12T17:37:00Z",
+      "phase": "New Moon",
+      "jd": 2461265.234027778,
+      "illumination": 6.141283890198634e-05,
+      "longitudeDifferenceDeg": 359.9968813565304,
+      "distanceKm": 366954.6765001103
+    },
+    {
+      "dateUT": "2026-09-26T16:49:00Z",
+      "phase": "Full Moon",
+      "jd": 2461310.2006944446,
+      "illumination": 0.9993575035797049,
+      "longitudeDifferenceDeg": 179.9943488349241,
+      "distanceKm": 379435.03425831464
+    },
+    {
+      "dateUT": "2026-10-03T13:25:00Z",
+      "phase": "Last Quarter",
+      "jd": 2461317.059027778,
+      "illumination": 0.5012888299747591,
+      "longitudeDifferenceDeg": 269.9939022525752,
+      "distanceKm": 370143.2906418056
+    },
+    {
+      "dateUT": "2026-10-10T15:50:00Z",
+      "phase": "New Moon",
+      "jd": 2461324.159722222,
+      "illumination": 0.0011238357448631886,
+      "longitudeDifferenceDeg": 359.9940047640226,
+      "distanceKm": 387639.87516995496
+    },
+    {
+      "dateUT": "2026-10-18T16:12:00Z",
+      "phase": "First Quarter",
+      "jd": 2461332.175,
+      "illumination": 0.5012576394490912,
+      "longitudeDifferenceDeg": 89.9891953967578,
+      "distanceKm": 402751.72682399023
+    },
+    {
+      "dateUT": "2026-10-26T04:12:00Z",
+      "phase": "Full Moon",
+      "jd": 2461339.675,
+      "illumination": 0.9984128227216613,
+      "longitudeDifferenceDeg": 179.99644484444474,
+      "distanceKm": 368871.560272186
+    },
+    {
+      "dateUT": "2026-12-30T18:59:00Z",
+      "phase": "Last Quarter",
+      "jd": 2461405.290972222,
+      "illumination": 0.501393062891805,
+      "longitudeDifferenceDeg": 269.99050918667757,
+      "distanceKm": 384971.997331663
+    }
+  ]
+}
